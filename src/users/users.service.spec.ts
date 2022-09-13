@@ -20,4 +20,9 @@ describe('UsersService', () => {
     const user = await service.findOne('john doe');
     expect(user.username).toEqual('john doe');
   });
+
+  it('should return undefined', async () => {
+    const user = await service.findOne('xxxx');
+    expect(user).toBeUndefined();
+  });
 });
