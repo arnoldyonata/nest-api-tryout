@@ -1,3 +1,4 @@
+import { UnauthorizedException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { AuthService } from './auth.service';
 import { LocalStrategy } from './local.strategy';
@@ -39,8 +40,16 @@ describe('Local', () => {
         });
       }),
     );
-    const result = await auth.validateUser('john doe', 'change me');
+    const result = await service.validate('john doe', 'change me');
     expect(result.id).toEqual(user.id);
     expect(result.username).toEqual(user.username);
+  });
+
+  it('should throw error', async () => {
+    try {
+      await service.validate('john doe', 'x me');
+    } catch (error) {
+      expect(error).toBeInstanceOf(UnauthorizedException);
+    }
   });
 });
