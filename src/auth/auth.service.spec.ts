@@ -1,5 +1,4 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import exp from 'constants';
 import { UsersService } from '../users/users.service';
 import { AuthService } from './auth.service';
 
@@ -36,7 +35,7 @@ describe('AuthService', () => {
       password: 'change me',
     };
     jest.spyOn(usersService, 'findOne').mockReturnValue(
-      new Promise((resolve, reject) => {
+      new Promise((resolve) => {
         process.nextTick(() => {
           resolve(user);
         });
