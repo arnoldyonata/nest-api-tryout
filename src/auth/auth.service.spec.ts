@@ -42,7 +42,9 @@ describe('AuthService', () => {
         });
       }),
     );
-    const x = await service.validateUser('john doe', 'change me');
-    expect(x).toBeDefined();
+    const result = await service.validateUser('john doe', 'change me');
+    expect(result.id).toEqual(user.id);
+    expect(result.username).toEqual(user.username);
+    expect(result.password).toBeUndefined();
   });
 });
