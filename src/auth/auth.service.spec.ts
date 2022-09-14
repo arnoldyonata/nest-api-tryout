@@ -1,10 +1,12 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { UsersService } from '../users/users.service';
 import { AuthService } from './auth.service';
+import { JwtService } from '@nestjs/jwt';
 
 describe('AuthService', () => {
   let service: AuthService;
   let usersService: UsersService;
+  let jwt: JwtService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -16,11 +18,18 @@ describe('AuthService', () => {
             findOne: jest.fn(),
           },
         },
+        {
+          provide: JwtService,
+          useValue: {
+            sign: jest.fn(),
+          },
+        },
       ],
     }).compile();
 
     service = module.get<AuthService>(AuthService);
     usersService = module.get<UsersService>(UsersService);
+    jwt = module.get<JwtService>(JwtService);
   });
 
   it('should be undefined', async () => {
