@@ -35,4 +35,11 @@ describe('AppController (e2e)', () => {
       .set('Authorization', `Bearer ${login.body.access_token}`);
     expect(profile.status).toEqual(200);
   });
+
+  it('/profile unauthenticated', () => {
+    return request(app.getHttpServer())
+      .get('/profile')
+      .set('Authorization', 'Bearer xxxx')
+      .expect(401);
+  });
 });
